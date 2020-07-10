@@ -45,8 +45,6 @@ LRESULT CALLBACK Screen::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 }
 
 Screen::Screen(HMONITOR hMonitor, LPRECT lprcMonitor, int opacity) {
-//    m_screen = screen;
-//    CreateDimWindow();
     m_hMonitor = hMonitor;
     m_alpha = getAlpha(opacity);
     RECT rect = (*lprcMonitor);
@@ -91,7 +89,10 @@ void Screen::CreateDimWindow() {
 void Screen::updateScreen() {
     HWND hwnd = GetForegroundWindow();
     HANDLE activescreenhandle = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
-    m_active = (m_hMonitor == activescreenhandle)? true : false;
+	qDebug() << "Checking active window";
+    qDebug() << "m_hMonitor" << m_hMonitor;
+    qDebug() << "activescreenhandle" << activescreenhandle;
+    m_active = (m_hMonitor == activescreenhandle) ? true : false;
 }
 
 byte Screen::getAlpha(int opacity) {
@@ -104,7 +105,6 @@ Screen::~Screen() {
 	if (m_brush) m_brush->Release();
     DestroyWindow(m_hwnd);
 }
-
 
 void Screen::Paint() {
 	m_renderTarget->BeginDraw();

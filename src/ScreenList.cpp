@@ -71,5 +71,6 @@ void ScreenList::checkWindows(){
 
     for(Screen* scr : m_screens) {
         scr->updateScreen();
+        setOpacity(m_opacity);
     }
 }
