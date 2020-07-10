@@ -26,7 +26,7 @@ public:
     void stop();
     void findScreens();
 
-    static MONITORENUMPROC MonitorEnumProc(HMONITOR Arg1, HDC Arg2, LPRECT Arg3, LPARAM Arg4);
+    static BOOL CALLBACK MonitorEnumProc(HMONITOR Arg1, HDC Arg2, LPRECT Arg3, LPARAM Arg4);
 
 public sloths:
 

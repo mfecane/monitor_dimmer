@@ -1,0 +1,9 @@
+build/
+build*/
+.vscode/
+
+*.aps
+
+Thumbs.db
+
+*txt.user

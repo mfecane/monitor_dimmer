@@ -71,6 +71,8 @@ void ScreenList::stop() {
 
 BOOL CALLBACK ScreenList::MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM lParam) {
     ScreenList* sl = (ScreenList*)lParam;
+
+
     return true;
 }
 
