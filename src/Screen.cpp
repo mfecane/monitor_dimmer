@@ -44,32 +44,32 @@ LRESULT CALLBACK Screen::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-Screen::Screen(QScreen* screen) {
-    m_screen = screen;
+Screen::Screen(HMONITOR hMonitor, LPRECT lprcMonitor, int opacity) {
+//    m_screen = screen;
+//    CreateDimWindow();
+    m_hMonitor = hMonitor;
+    m_alpha = getAlpha(opacity);
+    RECT rect = (*lprcMonitor);
+    m_rect = QRect(rect.left,
+                   rect.top,
+                   rect.right - rect.left,
+                   rect.bottom - rect.top);
+    qDebug() << "Creating Window on rect " << m_rect;
     CreateDimWindow();
 }
 
 void Screen::CreateDimWindow() {
-//    RECT rect = { 0, 0, 800, 600 };
 //    AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, false, WS_EX_OVERLAPPEDWINDOW);
-
-    QRect qrect = m_screen->geometry();
-
-//    RECT rect;
-//    rect.left = qrect.left();
-//    rect.top = qrect.top();
-//    rect.right = qrect.right();
-//    rect.bottom = qrect.bottom();
 
     m_hwnd = CreateWindowEx(
         WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TRANSPARENT,
         L"CoverWindow",
         L"DirectX Tut",
         WS_POPUP,
-        qrect.left(),
-        qrect.top(),
-        qrect.width(),
-        qrect.height(),
+        m_rect.left(),
+        m_rect.top(),
+        m_rect.width(),
+        m_rect.height(),
         g_hwnd,
         nullptr,
         m_hInstance,
@@ -80,7 +80,7 @@ void Screen::CreateDimWindow() {
     }
 
     const MARGINS margin = { -1 };
-    SetLayeredWindowAttributes(m_hwnd, 0, (int)0, LWA_ALPHA); // opacity
+    SetLayeredWindowAttributes(m_hwnd, 0, m_alpha, LWA_ALPHA); // opacity
     DwmExtendFrameIntoClientArea(m_hwnd, &margin);
 
     Init();
@@ -90,11 +90,12 @@ void Screen::CreateDimWindow() {
 
 void Screen::updateScreen() {
     HWND hwnd = GetForegroundWindow();
-    HANDLE screenhandle = (HANDLE)m_screen->handle();
     HANDLE activescreenhandle = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
-    qDebug() << "foreground hwnd" << hwnd;
-    qDebug() << "activescreenhandle" << activescreenhandle;
-    qDebug() << "screenhandle" << screenhandle;
+    m_active = (m_hMonitor == activescreenhandle)? true : false;
+}
+
+byte Screen::getAlpha(int opacity) {
+    return 255*(float)opacity/100;
 }
 
 Screen::~Screen() {
@@ -132,6 +133,7 @@ bool Screen::Init() {
 }
 
 void Screen::setOpacity(int opacity) {
-	byte alpha = 255*(float)opacity/100;
-	SetLayeredWindowAttributes(m_hwnd, 0, alpha, LWA_ALPHA);
+    m_alpha = getAlpha(opacity);
+    byte alpha = m_active ? 0 : m_alpha;
+    SetLayeredWindowAttributes(m_hwnd, 0, alpha, LWA_ALPHA);
 }

@@ -12,7 +12,7 @@ public:
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-    Screen(QScreen *screen);
+    Screen(HMONITOR hMonitor, LPRECT rect, int opacity);
 	~Screen();
 
 	void Paint();
@@ -26,6 +26,8 @@ public:
 
 private:
 
+    byte getAlpha(int opacity);
+
 	HWND m_hwnd = nullptr;
 
 	ID2D1Factory* m_factory = nullptr;
@@ -34,5 +36,9 @@ private:
     HINSTANCE m_hInstance = NULL;
     int m_nCmdShow = 8;
     QScreen* m_screen = nullptr;
+    HMONITOR m_hMonitor;
+    QRect m_rect;
+    bool m_active = true;
+    byte m_alpha;
 
 };

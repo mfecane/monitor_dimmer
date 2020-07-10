@@ -15,16 +15,15 @@ public:
 
     ScreenList();
 
-    void findScreensQt();
+    void findScreens();
     void deleteScreens();
-
-    bool checkFullscreen();
 
     void setOpacity(int value);
 
     void start();
     void stop();
-    void findScreens();
+
+    int getOpacity();
 
     static BOOL CALLBACK MonitorEnumProc(HMONITOR Arg1, HDC Arg2, LPRECT Arg3, LPARAM Arg4);
 
@@ -43,5 +42,4 @@ private:
     int m_opacity = 0;
     int m_maxopacity = 0;
 
-    void applyOpacity();
 };
