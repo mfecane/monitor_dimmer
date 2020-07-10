@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imports/Theme/qmldir</file>
+        <file>imports/Theme/Theme.qml</file>
+        <file>ui.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>Components/Appbutton.qml</file>
+        <file>../images/collapse.png</file>
+        <file>../images/close.png</file>
+        <file>../images/monitor_dimmer_icon.ico</file>
+    </qresource>
+</RCC>

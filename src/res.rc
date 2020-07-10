@@ -1,0 +1,14 @@
+#include "res.h"
+
+IDC_CONTEXTMENU MENU
+BEGIN
+    POPUP ""
+	BEGIN
+	MENUITEM "Show Flyout", IDM_FLYOUT
+    MENUITEM "Options", 	IDM_OPTIONS
+	MENUITEM SEPARATOR
+	MENUITEM "E&xit", 		IDM_EXIT
+	END
+END
+
+IDR_TRAYICON   	ICON		"..\\images\\monitor_dimmer_icon.ico"
