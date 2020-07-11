@@ -1,6 +1,7 @@
 TODO:
 
-- Fix memory leaks
-- Installer
-- Optimize
-- Ditch QT stuff
+[x] Fix memory leaks
+[x] Installer
+[] Optimize
+[] create release configuration
+[] Probably Ditch QT stuff
