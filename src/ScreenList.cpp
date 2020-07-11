@@ -14,6 +14,8 @@ extern int g_nCmdShow;
 ScreenList::ScreenList() :
     m_screens(QVector<Screen*>())
 {
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, &ScreenList::checkWindows);
 }
 
 void ScreenList::setOpacity(int value) {
@@ -35,8 +37,6 @@ void ScreenList::start() {
     if(m_enabled == true) return;
     m_enabled = true;
     findScreens();
-    m_timer = new QTimer(this);
-    connect(m_timer, &QTimer::timeout, this, &ScreenList::checkWindows);
     m_timer->start(100);
 }
 
@@ -44,7 +44,7 @@ void ScreenList::stop() {
     if(m_enabled == false) return;
     m_enabled = false;
     deleteScreens();
-    delete m_timer;
+    m_timer->stop();
 }
 
 int ScreenList::getOpacity() {

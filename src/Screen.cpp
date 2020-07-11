@@ -70,7 +70,7 @@ void Screen::CreateDimWindow() {
         m_rect.height(),
         g_hwnd,
         nullptr,
-        m_hInstance,
+        g_hInst,
         this);
 
     if (!m_hwnd) {
@@ -83,7 +83,8 @@ void Screen::CreateDimWindow() {
 
     Init();
 
-    ShowWindow(m_hwnd, 8);
+	int nCmdShow = 8;
+    ShowWindow(m_hwnd, nCmdShow);
 }
 
 void Screen::updateScreen() {
@@ -93,6 +94,8 @@ void Screen::updateScreen() {
     qDebug() << "m_hMonitor" << m_hMonitor;
     qDebug() << "activescreenhandle" << activescreenhandle;
     m_active = (m_hMonitor == activescreenhandle) ? true : false;
+	//CloseHandle(hwnd);
+	//CloseHandle(activescreenhandle);
 }
 
 byte Screen::getAlpha(int opacity) {
@@ -100,10 +103,20 @@ byte Screen::getAlpha(int opacity) {
 }
 
 Screen::~Screen() {
-	if (m_factory) m_factory->Release();
-	if (m_renderTarget) m_renderTarget->Release();
-	if (m_brush) m_brush->Release();
+	if (m_renderTarget)
+	{
+		m_renderTarget->Release();
+		m_renderTarget = nullptr;
+		qDebug() << "m_renderTarget released";
+	}
+	if (m_factory)
+	{
+		m_factory->Release();
+		m_factory = nullptr;
+		qDebug() << "factory released";
+	}
     DestroyWindow(m_hwnd);
+	//CloseHandle(m_hMonitor);
 }
 
 void Screen::Paint() {
@@ -125,9 +138,6 @@ bool Screen::Init() {
 		D2D1::HwndRenderTargetProperties(m_hwnd, D2D1::SizeU(rect.right, rect.bottom)),
 		&m_renderTarget);
 	if (res != S_OK) return false;
-
-	ID2D1SolidColorBrush* m_brush;
-	m_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF(.5f, .5f, .5f, .5f)), &m_brush);
 
 	return true;
 }

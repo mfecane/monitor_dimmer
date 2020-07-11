@@ -19,7 +19,6 @@ public:
 	bool Init();
 	void setOpacity(int opacity);
     void CreateDimWindow();
-    void checkForeground();
     void updateScreen();
 
 	HWND getHwnd() { return m_hwnd; }
@@ -32,10 +31,6 @@ private:
 
 	ID2D1Factory* m_factory = nullptr;
 	ID2D1HwndRenderTarget* m_renderTarget = nullptr;
-	ID2D1SolidColorBrush* m_brush = nullptr;
-    HINSTANCE m_hInstance = NULL;
-    int m_nCmdShow = 8;
-    QScreen* m_screen = nullptr;
     HMONITOR m_hMonitor;
     QRect m_rect;
     bool m_active = true;
