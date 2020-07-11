@@ -6,4 +6,5 @@ build*/
 
 Thumbs.db
 
-*.txt.user
+*.txt.*
+installer/*.exe
