@@ -6,4 +6,4 @@ build*/
 
 Thumbs.db
 
-*txt.user
+*.txt.user

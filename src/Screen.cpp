@@ -83,19 +83,21 @@ void Screen::CreateDimWindow() {
 
     Init();
 
-	int nCmdShow = 8;
+	int nCmdShow = SW_SHOWNA;
     ShowWindow(m_hwnd, nCmdShow);
 }
 
 void Screen::updateScreen() {
     HWND hwnd = GetForegroundWindow();
     HANDLE activescreenhandle = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
-	qDebug() << "Checking active window";
-    qDebug() << "m_hMonitor" << m_hMonitor;
-    qDebug() << "activescreenhandle" << activescreenhandle;
-    m_active = (m_hMonitor == activescreenhandle) ? true : false;
-	//CloseHandle(hwnd);
-	//CloseHandle(activescreenhandle);
+	if(m_hMonitor == activescreenhandle) {
+		m_active = true;
+		ShowWindow(m_hwnd, SW_HIDE);
+	}
+	else {
+		m_active = false;
+		ShowWindow(m_hwnd, SW_SHOWNA);
+	}
 }
 
 byte Screen::getAlpha(int opacity) {
@@ -116,7 +118,6 @@ Screen::~Screen() {
 		qDebug() << "factory released";
 	}
     DestroyWindow(m_hwnd);
-	//CloseHandle(m_hMonitor);
 }
 
 void Screen::Paint() {
@@ -144,6 +145,5 @@ bool Screen::Init() {
 
 void Screen::setOpacity(int opacity) {
     m_alpha = getAlpha(opacity);
-    byte alpha = m_active ? 0 : m_alpha;
-    SetLayeredWindowAttributes(m_hwnd, 0, alpha, LWA_ALPHA);
+    SetLayeredWindowAttributes(m_hwnd, 0, m_alpha, LWA_ALPHA);
 }
