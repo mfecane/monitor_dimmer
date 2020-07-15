@@ -35,7 +35,7 @@ InstallDir "$PROGRAMFILES64\${COMPANYNAME}\${APPNAME}"
 LicenseData "license.rtf"
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME}"
-Icon "../images/monitor_dimmer_icon.ico"
+Icon "../images/icon.ico"
 outFile "${APPNAME}.win-x64.exe"
  
 !include LogicLib.nsh
@@ -125,7 +125,8 @@ section "install"
  
  	# Start Menu
 	createDirectory "$SMPROGRAMS\${COMPANYNAME}"
-	createShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\monitor_dimmer.exe" "" "$INSTDIR\logo.ico"
+	createShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\monitor_dimmer.exe"
+	# "" "$INSTDIR\logo.ico"
  
 	# Registry information for add/remove programs
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"

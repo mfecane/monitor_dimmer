@@ -31,6 +31,7 @@ add_executable(${PROJECT_NAME} WIN32
 			src/res.rc
 			src/lib.h
 			src/lib.cpp
+			installer/time_lapse_rec.nsi
 			${SRC_UI}
 			${RESOURCES}
 			)

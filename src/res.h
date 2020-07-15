@@ -4,3 +4,4 @@
 #define IDM_EXIT                124
 #define IDM_OPTIONS             125
 #define IDM_FLYOUT              126
+#define IDI_ICON1               127

@@ -11,4 +11,5 @@ BEGIN
 	END
 END
 
-IDR_TRAYICON   	ICON		"..\\images\\monitor_dimmer_icon.ico"
+IDR_TRAYICON    ICON        "..\\images\\icon.ico"
+IDI_ICON1       ICON        "..\\images\\icon.ico"
