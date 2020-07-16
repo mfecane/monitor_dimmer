@@ -20,16 +20,16 @@ Window {
 
     color: Theme.background_color
 
-    title: qsTr("Shlyapp")
+    title: qsTr("Monitor dimmer")
     id:wnd
-    flags: 
-        Qt.ToolTip |
-        Qt.WA_TranslucentBackground |
-        Qt.FramelessWindowHint | 
-        Qt.MSWindowsFixedSizeDialogHint | 
+    flags:
+        //Qt.WA_TranslucentBackground |
+        Qt.FramelessWindowHint |
+        //Qt.MSWindowsFixedSizeDialogHint |
         Qt.WindowStaysOnTopHint |
         Qt.Tool |
-        Qt.Popup
+        Qt.Popup |
+        Qt.SubWindow
 
     Image {
         width: wnd.width
