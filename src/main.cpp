@@ -24,7 +24,15 @@ HWND g_hwnd;
 
 void RegisterScreenWindowClass();
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
+    HANDLE hMutex = OpenMutex(MUTEX_ALL_ACCESS, 0, L"MonitorDimmer.0");
+    if (!hMutex) {
+        hMutex = CreateMutex(0, 0, L"MonitorDimmer.0");
+    } else {
+        return 0;
+    }
+
     Q_INIT_RESOURCE(res);
 
     g_hInst = (HINSTANCE)::GetModuleHandle(NULL);
@@ -42,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
-   
+
     engine.addImportPath("qrc:/imports");
 
     g_screenList = new ScreenList();
@@ -50,12 +58,12 @@ int main(int argc, char *argv[]) {
     qmlRegisterSingletonType<BackEnd>("io.qt.examples.backend", 1, 0, "BackEnd", &BackEnd::qmlInstance);
 
     engine.load(QUrl(QStringLiteral("qrc:/ui.qml")));
-	QObject* m_rootObject = engine.rootObjects().first();
-	if (m_rootObject) {
-		QWindow* window = qobject_cast<QWindow*>(m_rootObject);
-		if (window) {
-			g_hwnd = (HWND)window->winId();
-		}
+    QObject* m_rootObject = engine.rootObjects().first();
+    if (m_rootObject) {
+        QWindow* window = qobject_cast<QWindow*>(m_rootObject);
+        if (window) {
+            g_hwnd = (HWND)window->winId();
+        }
     }
 
     return app.exec();

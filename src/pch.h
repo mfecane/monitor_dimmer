@@ -4,3 +4,4 @@
 #include "d2d1.h"
 #include "dwmapi.h"
 #include "winuser.h"
+#include "synchapi.h"

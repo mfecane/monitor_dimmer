@@ -32,6 +32,7 @@ add_executable(${PROJECT_NAME} WIN32
 			src/lib.h
 			src/lib.cpp
 			installer/time_lapse_rec.nsi
+                        README.md
 			${SRC_UI}
 			${RESOURCES}
 			)
@@ -52,6 +53,7 @@ target_link_libraries(${PROJECT_NAME} "d2d1.lib")
 target_link_libraries(${PROJECT_NAME} "Dwmapi.lib")
 target_link_libraries(${PROJECT_NAME} "Comctl32.lib")
 target_link_libraries(${PROJECT_NAME} "User32.lib")
+target_link_libraries(${PROJECT_NAME} "Kernel32.lib")
 	
 # set startup project
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})

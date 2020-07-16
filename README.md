@@ -1,7 +1,6 @@
 TODO:
 
-- [x] Fix memory leaks
-- [x] Installer
 - [ ] Optimize
-- [ ] create release configuration
+- [ ] create build configurations
 - [ ] Probably Ditch QT stuff
+- [ ] Research deployment of QML
