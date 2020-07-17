@@ -27,8 +27,8 @@ Window {
         Qt.FramelessWindowHint |
         //Qt.MSWindowsFixedSizeDialogHint |
         Qt.WindowStaysOnTopHint |
-        Qt.Tool |
-        Qt.Popup |
+        //Qt.Tool |
+        //Qt.Popup |
         Qt.SubWindow
 
     Image {
@@ -46,7 +46,7 @@ Window {
             Layout.preferredWidth: 46
             Layout.preferredHeight: 30
             src:"qrc:/images/collapse.png"
-            onClicked: wnd.showMinimized()
+            onClicked: wnd.hide()
             }
         Appbutton {
             Layout.preferredWidth: 46
