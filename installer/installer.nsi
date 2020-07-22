@@ -1,30 +1,25 @@
-# This installs two files, app.exe and logo.ico, creates a start menu shortcut, builds an uninstaller, and
-# adds uninstall information to the registry for Add/Remove Programs
- 
-# To get started, put this script into a folder with the two files (app.exe, logo.ico, and license.rtf -
-# You'll have to create these yourself) and run makensis on it
- 
-# If you change the names "app.exe", "logo.ico", or "license.rtf" you should do a search and replace - they
-# show up in a few places.
-# All the other settings can be tweaked by editing the !defines at the top of this script
+Unicode True
+
 !define APPNAME "Monitor dimmer"
 !define COMPANYNAME "Gavitka Software"
 !define DESCRIPTION "Small utility used to dim inactive monitor."
 
 !define APPNAMELC "monitor_dimmer"
+!define EXEFILE "monitor_dimmer"
 !define BUILDDIR "..\build1\"
 
 # These three must be integers
 !define VERSIONMAJOR 1
 !define VERSIONMINOR 0
 !define VERSIONBUILD 0
+
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 !define HELPURL "http://..." # "Support Information" link
 !define UPDATEURL "http://..." # "Product Updates" link
 !define ABOUTURL "http://..." # "Publisher" link
+
 # This is the size (in kB) of all the files copied into "Program Files"
-# to update
 !define INSTALLSIZE 149352
  
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
@@ -33,6 +28,7 @@ InstallDir "$PROGRAMFILES64\${COMPANYNAME}\${APPNAME}"
  
 # rtf or txt file - remember if it is txt, it must be in the DOS text format (\r\n)
 LicenseData "license.rtf"
+
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME}"
 Icon "../images/icon.ico"
@@ -65,18 +61,13 @@ section "install"
 
 	SetRegView 64
 
-	# Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
+	# Files for the install directory
 	setOutPath $INSTDIR
-	# Files added here should be removed by the uninstaller (see section "uninstall")
-	# file "app.exe"
-	# file "logo.ico"
 	
 	# Executable
-
-	File "${BUILDDIR}monitor_dimmer.exe"
+	File "${BUILDDIR}${EXEFILE}.exe"
 
 	# Dll's
-
 	File "${BUILDDIR}*.dll"
 
 	# QML stuff
@@ -126,7 +117,6 @@ section "install"
  	# Start Menu
 	createDirectory "$SMPROGRAMS\${COMPANYNAME}"
 	createShortCut "$SMPROGRAMS\${COMPANYNAME}\${APPNAME}.lnk" "$INSTDIR\monitor_dimmer.exe"
-	# "" "$INSTDIR\logo.ico"
  
 	# Registry information for add/remove programs
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
@@ -187,7 +177,6 @@ section "uninstall"
 	delete $INSTDIR\uninstall.exe
  
 	# Try to remove the install directory - this will only happen if it is empty
-
 	rmDir /r $INSTDIR
 
 	# Try to remove the Start Menu folder - this will only happen if it is empty
